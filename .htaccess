@@ -1,0 +1,24 @@
+# Bu dosya, document root PROJE KOKUNE ayarliyken (public/ klasorune degil)
+# sitenin dogrudan calismasini saglar. Tum istekleri public/ klasorune
+# yonlendirir; app/, config/, sql/, vendor/, storage/, .env gibi dosya ve
+# klasorler public/ altinda olmadiklari icin hicbir zaman dogrudan servis
+# edilmez (var olmayan bir rota olarak router'a duser, router 404 doner).
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # public/ icinde gercekten var olan bir dosya/klasorse, onu direkt servis et
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Geri kalan her sey uygulamanin front controller'ina (public/index.php) gitsin
+    RewriteRule ^(.*)$ public/index.php [L]
+</IfModule>
+
+# Nokta ile baslayan dosyalara (.env, .git, .htaccess vb.) erisimi engelle
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

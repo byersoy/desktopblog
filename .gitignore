@@ -1,0 +1,11 @@
+.env
+storage/logs/*
+!storage/logs/.gitkeep
+public/uploads/posts/*
+!public/uploads/posts/.gitkeep
+public/uploads/favicons/*
+!public/uploads/favicons/.gitkeep
+.DS_Store
+.idea/
+.claude/
+Arşiv.zip
